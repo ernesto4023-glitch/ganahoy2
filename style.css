@@ -258,95 +258,38 @@ th, td {
   border: 1px solid #ccc;
 }
 
-@media (max-width: 1024px) {
-  .tabla {
-    grid-template-columns: repeat(10, 1fr);
-  }
-
-  .img-principal img {
-    width: 350px;
-    height: 350px;
-  }
-
-  .calendario,
-  .parrafo {
-    width: 95%;
-  }
-
-  .list ul {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
-    margin-right: 0;
-    padding-left: 20px;
-  }
-
-  .boton-lindo {
-    margin: 20px auto;
-    display: block;
-  }
-}
-
-@media (max-width: 480px) {
-  .tabla {
-    grid-template-columns: repeat(5, 1fr);
-    gap: 4px;
-  }
-
-  .ticket {
-    width: 35px;
-    height: 35px;
-    font-size: 12px;
-  }
-
-  .img-principal img {
-    width: 250px;
-    height: 250px;
-    margin-top: 30px;
-  }
-
-  .principal {
-    flex-direction: column;
-    height: auto;
-    padding: 10px 0;
-  }
-
-  .calendario {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
-
-  .parrafo {
-    width: 95%;
-    padding-left: 5px;
-  }
-
-  table {
-    font-size: 14px;
-  }
-
-  th, td {
-    padding: 6px;
-  }
-
-  button,
-  #btnWhatsapp {
-    font-size: 14px;
-    padding: 8px;
-  }
-}
-
 @media (max-width: 768px) {
+  body {
+    height: 100vh;
+    overflow-x: hidden;
+  }
+
   .menu-toggle {
     display: block;
+    z-index: 9999;
+    position: relative;
   }
 
   .list {
     display: none;
-    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    left: 0;
     width: 100%;
-    background: #000;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 9998;
+    text-align: center;
+  }
+
+  .list.show {
+    display: flex;
+    flex-direction: column;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 
   .list ul {
@@ -356,11 +299,81 @@ th, td {
   }
 
   .list ul li {
-    padding: 15px;
-    text-align: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #444;
   }
 
-  .list.show {
+  .list ul li a {
+    color: white;
+    font-size: 16px;
+    text-decoration: none;
+  }
+
+  .principal {
+    flex-wrap: wrap;
+    padding: 10px;
+    align-items: center;
+    position: relative;
+    z-index: 9999;
+  }
+
+  .principal h2 {
+    font-size: 14px;
     display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .principal img {
+    width: 25px;
+    height: 25px;
+  }
+
+  .img-principal img {
+    width: 250px;
+    height: 250px;
+    margin-top: 30px;
+  }
+
+  .calendario {
+    width: 90%;
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .parrafo {
+    width: 90%;
+    font-size: 14px;
+  }
+
+  .boton-lindo {
+    margin: 20px auto;
+    padding: 12px 25px;
+    font-size: 16px;
+  }
+
+  .tabla {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 6px;
+  }
+
+  .ticket {
+    width: 35px;
+    height: 35px;
+    font-size: 12px;
+  }
+
+  input, button, #btnWhatsapp {
+    width: 90%;
+    font-size: 16px;
+  }
+
+  table {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  th, td {
+    padding: 8px;
   }
 }

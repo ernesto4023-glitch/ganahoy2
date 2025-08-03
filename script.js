@@ -206,7 +206,12 @@ if (document.getElementById('contenedorTalonario')) {
 }
 
 
-  function toggleMenu() {
-    const menu = document.getElementById('menu');
+
+  const toggleBtn = document.getElementById('menu-toggle');
+  const menu = document.getElementById('menu');
+
+  toggleBtn.addEventListener('click', () => {
     menu.classList.toggle('show');
-  }
+  });
+
+
