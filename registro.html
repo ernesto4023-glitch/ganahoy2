@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Registro</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<style>
+  body{
+    height: 100vh;
+
+  }
+  h2{
+    margin-right: 30px;
+  }
+  p{
+    margin-right: 30px;
+  }
+
+  .formulario{
+    width: 400px;
+    height: 250px;
+    background-color: antiquewhite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 10px;
+    margin: 0 auto;
+    margin-top: 100px;
+    padding-left: 30px;
+  }
+  button{
+    margin-left: 120px;
+  }
+</style>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="principal ">
+                <h2><img src="Imagen de WhatsApp 2025-08-02 a las 23.30.55_6bd25f2b.jpg" alt=""> Donde todos Triunfamos</h2>
+                <div class="list">
+                    <ul>
+                        <li><a href="index.html">Hogar</a></li>
+                        <li><a href="talonario.html">Talonario</a></li>
+                        <li><a href="consulta.html">Consulta</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+  <div class="formulario">
+    <h2>Registro de Participante</h2>
+    
+    <p id="ticketsSeleccionados"></p>
+    <p id="montoTotal"></p>
+    
+    <form onsubmit="registrarParticipante(event)">
+      <input type="text" id="nombre" placeholder="Nombre y Apellido" required>
+      <input type="tel" id="whatsapp" placeholder="Número de WhatsApp" required>
+      <button type="submit">Registrar</button>
+      <a id="btnWhatsapp" target="_blank" style="display:none;">
+      Confirmar por WhatsApp
+    </a>
+    </form>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
