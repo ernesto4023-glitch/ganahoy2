@@ -1,0 +1,97 @@
+<!-- public/talonario.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Talonario de Números</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+  <nav>
+    <!-- Logo como imagen -->
+     <div class="logo">
+    <img src="../ChatGPT_Image_6_ago_2025__11_05_24_a.m.-removebg-preview.png" alt="Logo" class="logo-img" />
+    <h5>Recibe los mejores Premios</h5>
+    </div>
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+    <div class="nav-links" id="navLinks">
+      <a href="/index.html">Inicio</a>
+      <a href="/talonario.html">Servicios</a>
+      <a href="/admin.html">Nosotros</a>
+    </div>
+  </nav>
+
+  <h1>Talonario de Números</h1>
+  <div class="grid" id="numerosContainer"></div>
+
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <p id="infoModal"></p>
+      <button class="cerrar" onclick="cerrarModal()">Cerrar</button>
+    </div>
+  </div>
+
+  <script>
+    const numerosContainer = document.getElementById('numerosContainer');
+    const modal = document.getElementById('modal');
+    const infoModal = document.getElementById('infoModal');
+
+    let mapaTickets = {}; // { "00001": { nombre, apellido, telefono, ... }, ... }
+
+    // Mostrar modal con datos del número
+    function mostrarModal(info) {
+      infoModal.innerHTML = `
+        <strong>Ocupado por:</strong><br>
+        ${info.nombre} ${info.apellido}<br>
+        C.I: ${info.cedula}<br>
+        Tel: ${info.telefono}
+      `;
+      modal.style.display = 'flex';
+    }
+
+    function cerrarModal() {
+      modal.style.display = 'none';
+    }
+
+    // Obtener registros del backend
+    async function cargarTalonario() {
+      const res = await fetch('/api/registros');
+      const data = await res.json();
+      const ocupados = new Set();
+
+      if (data.success) {
+        data.registros.forEach(reg => {
+          reg.tickets.split(',').forEach(t => {
+            const numero = t.trim();
+            if (numero) {
+              ocupados.add(numero);
+              mapaTickets[numero] = reg;
+            }
+          });
+        });
+
+        // Crear todos los números del 00001 al 10000
+        for (let i = 1; i <= 10000; i++) {
+          const num = String(i).padStart(5, '0');
+          const div = document.createElement('div');
+          div.textContent = num;
+          div.classList.add('numero');
+
+          if (ocupados.has(num)) {
+            div.classList.add('ocupado');
+            div.onclick = () => mostrarModal(mapaTickets[num]);
+          } else {
+            div.classList.add('disponible');
+          }
+
+          numerosContainer.appendChild(div);
+        }
+      }
+    }
+
+    cargarTalonario();
+  </script>
+</body>
+</html>

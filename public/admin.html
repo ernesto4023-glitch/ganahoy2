@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Panel de Administración</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+   <nav>
+    <!-- Logo como imagen -->
+     <div class="logo">
+    <img src="../ChatGPT_Image_6_ago_2025__11_05_24_a.m.-removebg-preview.png" alt="Logo" class="logo-img" />
+    <h5>Recibe los mejores Premios</h5>
+    </div>
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+    <div class="nav-links" id="navLinks">
+      <a href="/index.html">Inicio</a>
+      <a href="/talonario.html">Servicios</a>
+      <a href="/admin.html">Nosotros</a>
+    </div>
+  </nav>
+  
+  <h1>Panel de Administración</h1>
+
+  <div class="contenedor">
+    <div class="tabla-contenedor" style="overflow-x: auto; max-height: 500px;">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Cédula</th>
+            <th>Teléfono</th>
+            <th>Tickets</th>
+            <th>Total</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tablaRegistros">
+          <!-- Se llena con JS -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    async function cargarRegistros() {
+      const res = await fetch('/api/registros');
+      const data = await res.json();
+      const cuerpo = document.getElementById('tablaRegistros');
+      cuerpo.innerHTML = '';
+
+      if (data.success) {
+        data.registros.forEach(reg => {
+          const fila = document.createElement('tr');
+
+          fila.innerHTML = `
+            <td>${reg.id}</td>
+            <td>${reg.nombre} ${reg.apellido}</td>
+            <td>${reg.cedula}</td>
+            <td>${reg.telefono}</td>
+            <td>${reg.tickets}</td>
+            <td>${reg.total_pagado.toFixed(2)} Bs</td>
+            <td class="estado ${reg.estado === 'Verificado' ? 'verificado' : 'en-espera'}">${reg.estado}</td>
+            <td>
+              <button class="verificar" onclick="verificar(${reg.id})">Verificar</button>
+              <button class="borrar" onclick="borrar(${reg.id})">Borrar</button>
+            </td>
+          `;
+
+          cuerpo.appendChild(fila);
+        });
+      } else {
+        cuerpo.innerHTML = `<tr><td colspan="8">No hay registros disponibles.</td></tr>`;
+      }
+    }
+
+    async function verificar(id) {
+      await fetch(`/api/verificar/${id}`, { method: 'POST' });
+      cargarRegistros();
+    }
+
+    async function borrar(id) {
+      if (confirm('¿Estás seguro de eliminar este registro?')) {
+        await fetch(`/api/eliminar/${id}`, { method: 'DELETE' });
+        cargarRegistros();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', cargarRegistros);
+  </script>
+</body>
+</html>

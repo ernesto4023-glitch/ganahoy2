@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>¡Gracias por tu registro!</title>
+  <link rel="stylesheet" href="style.css" />
+
+
+</head>
+<body>
+
+   <nav>
+    <!-- Logo como imagen -->
+     <div class="logo">
+    <img src="../ChatGPT_Image_6_ago_2025__11_05_24_a.m.-removebg-preview.png" alt="Logo" class="logo-img" />
+    <h5>Recibe los mejores Premios</h5>
+    </div>
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+    <div class="nav-links" id="navLinks">
+      <a href="/index.html">Inicio</a>
+      <a href="/talonario.html">Servicios</a>
+      <a href="/admin.html">Nosotros</a>
+    </div>
+  </nav>
+  
+  <h1>¡Gracias por tu participación!</h1>
+  <div class="tarjeta" id="info">
+    <!-- Aquí van los datos -->
+  </div>
+
+  <a class="volver" href="registro.html">Volver al formulario</a>
+
+  <script>
+    const datos = JSON.parse(localStorage.getItem('ultimoRegistro'));
+
+    const contenedor = document.getElementById('info');
+
+    if (datos) {
+      contenedor.innerHTML = `
+        <p><strong>Nombre:</strong> ${datos.nombre} ${datos.apellido}</p>
+        <p><strong>Cédula:</strong> ${datos.cedula}</p>
+        <p><strong>Teléfono:</strong> ${datos.telefono}</p>
+        <p><strong>Tickets:</strong></p>
+        <div class="tickets">${datos.tickets.join(', ')}</div>
+        <p><strong>Total Pagado:</strong> ${datos.total_pagado.toFixed(2)} Bs</p>
+        <p><strong>Estado:</strong> En espera</p>
+      `;
+    } else {
+      contenedor.innerHTML = `<p>No hay datos disponibles.</p>`;
+    }
+  </script>
+</body>
+</html>

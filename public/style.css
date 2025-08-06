@@ -1,0 +1,466 @@
+
+/* RESET GENERAL */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'poppins';
+  background: linear-gradient(to right, #24243e, #302b63, #0f0c29);
+  color: #fff;
+  min-height: 100vh;
+}
+ nav {
+      background-color: #000;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 20px;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .logo{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .logo-img {
+      height: 50px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #FFD700;
+    }
+
+    .menu-icon {
+      display: none;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: white;
+    }
+
+h1, h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.contenedor {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 10px;
+}
+
+/* TABLAS */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #1c1c3c;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #444;
+  word-break: break-word;
+}
+
+th {
+  background-color: #27276e;
+  color: #fff;
+}
+
+/* BOTONES */
+button, .volver, button[type="submit"] {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 5px;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+.verificar {
+  background-color: #00c853;
+  color: white;
+}
+
+.borrar {
+  background-color: #d32f2f;
+  color: white;
+}
+
+button[type="submit"] {
+  background: green;
+  color: white;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.volver {
+  background-color: #00bfa5;
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+  text-align: center;
+}
+
+/* ESTADOS */
+.estado {
+  font-weight: bold;
+}
+
+.estado.verificado {
+  color: #00e676;
+}
+
+.estado.en-espera {
+  color: #ffeb3b;
+}
+
+/* FORMULARIO */
+form {
+  background-color: #fff;
+  color: #000;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+label {
+  margin: 10px 0 5px;
+  display: block;
+  font-weight: bold;
+}
+
+input, select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+/* TICKET SELECTOR */
+.ticket-selector {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.ticket-selector button {
+  width: 35px;
+  height: 35px;
+  background: #007bff;
+  color: white;
+}
+
+.ticket-selector input {
+  width: 60px;
+  text-align: center;
+  font-size: 18px;
+}
+
+/* BANCOS */
+.bancos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 10px 0;
+  justify-content: center;
+}
+
+.banco {
+  flex: 1 1 120px;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  background: #eee;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.banco.selected {
+  border-color: green;
+  background: #d9ffd9;
+}
+
+.banco img {
+  width: 80px;
+  height: auto;
+}
+
+/* TARJETA DE AGRADECIMIENTO */
+.tarjeta {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 25px;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.tarjeta p {
+  margin: 10px 0;
+  font-size: 18px;
+}
+
+.tickets {
+  background-color: #212121;
+  padding: 12px;
+  border-radius: 5px;
+  font-size: 18px;
+  color: #fff176;
+}
+
+/* RESPUESTA */
+#respuesta {
+  text-align: center;
+  margin-top: 10px;
+  font-weight: bold;
+  color: red;
+}
+
+/* TALONARIO */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+  gap: 5px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+  
+
+.numero {
+  background-color: #1c1c3c;
+  padding: 10px 2px;
+  text-align: center;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+
+.ocupado {
+  background: #ff5c5c;
+  color: white;
+  cursor: pointer;
+}
+
+/* INFO COMPRADOR (TALONARIO) */
+#infoComprador {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 15px;
+  background: #fff;
+  color: #000;
+  border-radius: 8px;
+  display: none;
+}
+
+#infoComprador p {
+  margin: 5px 0;
+  font-size: 16px;
+}
+
+.tabla-responsive {
+  overflow-x: auto;
+  width: 100%;
+}
+
+table {
+  min-width: 600px; /* Fuerza el ancho mínimo para que se active el scroll */
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #1c1c3c;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+
+/* RESPONSIVE */
+@media screen and (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 60px;
+        right: 20px;
+        background-color: #000;
+        flex-direction: column;
+        width: 160px;
+        padding: 15px;
+        border-radius: 8px;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .menu-icon {
+        display: block;
+      }
+
+  h1, h2 {
+    font-size: 20px;
+    line-height: 1.2;
+  }
+
+  .contenedor, form, .tarjeta, #infoComprador {
+    padding: 10px;
+    width: 100%;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: 4px;
+  }
+
+  .ticket-selector {
+    flex-direction: row;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 15px;
+  }
+
+  .ticket-selector button {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+  }
+
+  .ticket-selector input {
+    width: 50px;
+    font-size: 16px;
+  }
+
+  .bancos {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .banco {
+    width: 100%;
+    flex: none;
+  }
+
+  table {
+    font-size: 13px;
+    word-break: break-word;
+    display: block;
+  }
+
+  th, td {
+    padding: 8px;
+    white-space: normal;
+  }
+
+  input, select, button, .volver {
+    font-size: 15px;
+  }
+
+  .tabla-responsive {
+  overflow-x: auto;
+}
+
+
+}
+
+
+@media screen and (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+
+  h1, h2 {
+    font-size: 20px;
+    line-height: 1.2;
+  }
+
+  .contenedor, form, .tarjeta, #infoComprador {
+    padding: 10px;
+    width: 100%;
+  }
+
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: 4px;
+  }
+
+  .ticket-selector {
+    flex-direction: row;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 15px;
+  }
+
+  .ticket-selector button {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+  }
+
+  .ticket-selector input {
+    width: 50px;
+    font-size: 16px;
+  }
+
+  .bancos {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .banco {
+    width: 100%;
+    flex: none;
+  }
+
+  table {
+    font-size: 13px;
+    word-break: break-word;
+    overflow-x: auto;
+    display: block;
+  }
+
+  th, td {
+    padding: 8px;
+    white-space: normal;
+  }
+
+  input, select, button, .volver {
+    font-size: 15px;
+  }
+}

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registro de Tickets</title>
+  <link rel="stylesheet" href="style.css" />
+
+</head>
+<body>
+  <nav>
+    <!-- Logo como imagen -->
+     <div class="logo">
+    <img src="../ChatGPT_Image_6_ago_2025__11_05_24_a.m.-removebg-preview.png" alt="Logo" class="logo-img" />
+    <h5>Recibe los mejores Premios</h5>
+    </div>
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+    <div class="nav-links" id="navLinks">
+      <a href="/index.html">Inicio</a>
+      <a href="/talonario.html">Servicios</a>
+      <a href="/admin.html">Nosotros</a>
+    </div>
+  </nav>
+
+  <h1>Formulario de Registro</h1>
+
+  <form id="formRegistro">
+    <label>Cantidad de Tickets</label>
+    <div class="ticket-selector">
+      <button type="button" id="restar">-</button>
+      <input type="text" name="cantidad" id="cantidad" value="2" readonly />
+      <button type="button" id="sumar">+</button>
+    </div>
+
+    <label>Total a pagar (Bs.)</label>
+    <input type="text" name="total" id="total" value="380.00" readonly />
+
+
+    <label>Nombre</label>
+    <input type="text" name="nombre" required />
+
+    <label>Apellido</label>
+    <input type="text" name="apellido" required />
+
+    <label>Cédula</label>
+    <input type="text" name="cedula" required />
+
+    <label>Teléfono</label>
+    <input type="text" name="telefono" required />
+
+    <label>Banco para Pago</label>
+        <label for="banco">Seleccione un banco:</label>
+    <select id="banco" onchange="mostrarImagenBanco()">
+      <option value="">-- Elija un banco --</option>
+      <option value="venezuela">Banco de Venezuela</option>
+      <option value="provincial">Banco Provincial</option>
+      <option value="mercantil">Banco Mercantil</option>
+    </select>
+
+<div id="imagenBancoContainer"></div>
+
+    <button type="submit">Pagar</button>
+    <div id="respuesta"></div>
+  </form>
+
+  <script>
+    const form = document.getElementById("formRegistro");
+    const respuestaDiv = document.getElementById("respuesta");
+    const cantidadInput = document.getElementById("cantidad");
+    const totalInput = document.getElementById("total");
+    const progressFill = document.getElementById("progressFill");
+    const bancoHidden = document.getElementById("bancoSeleccionado");
+    const bancos = document.querySelectorAll(".banco");
+
+    const precioPorTicket = 190;
+    const minTickets = 2;
+    const maxTickets = 10;
+
+    document.getElementById("sumar").addEventListener("click", () => {
+      let val = parseInt(cantidadInput.value);
+      if (val < maxTickets) {
+        cantidadInput.value = val + 1;
+        totalInput.value = (precioPorTicket * (val + 1)).toFixed(2);
+      }
+    });
+
+    document.getElementById("restar").addEventListener("click", () => {
+      let val = parseInt(cantidadInput.value);
+      if (val > minTickets) {
+        cantidadInput.value = val - 1;
+        totalInput.value = (precioPorTicket * (val - 1)).toFixed(2);
+      }
+    });
+
+    bancos.forEach(div => {
+      div.addEventListener("click", () => {
+        bancos.forEach(b => b.classList.remove("selected"));
+        div.classList.add("selected");
+        bancoHidden.value = div.dataset.banco;
+      });
+    });
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      if (!bancoHidden.value) {
+        respuestaDiv.textContent = "Debes seleccionar un banco";
+        return;
+      }
+
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+      data.cantidad = parseInt(data.cantidad);
+      data.total = parseFloat(data.total);
+
+      const res = await fetch("/api/registro", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      const result = await res.json();
+      if (result.success) {
+        const datosFinales = {
+          nombre: data.nombre,
+          apellido: data.apellido,
+          cedula: data.cedula,
+          telefono: data.telefono,
+          banco: data.banco,
+          cantidad: data.cantidad,
+          total_pagado: data.total,
+          tickets: result.tickets
+        };
+        localStorage.setItem("ultimoRegistro", JSON.stringify(datosFinales));
+        window.location.href = "gracias.html";
+      } else {
+        respuestaDiv.textContent = result.message || "Error al registrar";
+      }
+    });
+
+    async function actualizarBarraProgreso() {
+      const res = await fetch("/api/registros");
+      const data = await res.json();
+      if (!data.success) return;
+
+      let usados = 0;
+      data.registros.forEach(r => usados += r.tickets.split(",").length);
+      const total = 10000;
+      const disponibles = total - usados;
+      const porcentaje = (disponibles / total) * 100;
+
+      progressFill.style.width = `${porcentaje}%`;
+      progressFill.style.background =
+        porcentaje > 70 ? "green" :
+        porcentaje > 30 ? "orange" :
+        "red";
+    }
+
+    actualizarBarraProgreso();
+  </script>
+</body>
+</html>
